@@ -83,6 +83,13 @@ namespace DotVVM.Framework.Tests.Binding
         }
 
         [TestMethod]
+        public void StaticCommandCompilation_MultipleCommandsWithVariable()
+        {
+            var result = CompileBinding("val lenVar = StaticCommands.GetLength(StringProp).ToString(); StringProp = StaticCommands.GetLength(lenVar).ToString();", typeof(TestViewModel));
+            Assert.AreEqual("(function(a,b){return new Promise(function(resolve,reject){dotvvm.staticCommandPostback(a,\"WARNING/NOT/ENCRYPTED+++WyJEb3RWVk0uRnJhbWV3b3JrLlRlc3RzLkJpbmRpbmcuU3RhdGljQ29tbWFuZHMsIERvdFZWTS5GcmFtZXdvcmsuVGVzdHMuQ29tbW9uIiwiR2V0TGVuZ3RoIixbXSwiQUE9PSJd\",[b.$data.StringProp()]).then(function(r_0){dotvvm.staticCommandPostback(a,\"WARNING/NOT/ENCRYPTED+++WyJEb3RWVk0uRnJhbWV3b3JrLlRlc3RzLkJpbmRpbmcuU3RhdGljQ29tbWFuZHMsIERvdFZWTS5GcmFtZXdvcmsuVGVzdHMuQ29tbW9uIiwiR2V0TGVuZ3RoIixbXSwiQUE9PSJd\",[dotvvm.globalize.bindingNumberToString(r_0)()]).then(function(r_1){resolve(b.$data.StringProp(dotvvm.globalize.bindingNumberToString(r_1)()).StringProp());},reject);},reject);});}(this,ko.contextFor(this)))", result);
+        }
+
+        [TestMethod]
         public void StaticCommandCompilation_ChainedCommandsWithSemicolon()
         {
             var result = CompileBinding("StringProp = StaticCommands.GetLength(StringProp).ToString(); StringProp = StaticCommands.GetLength(StringProp).ToString()", typeof(TestViewModel));
